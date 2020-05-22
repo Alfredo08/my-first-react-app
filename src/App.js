@@ -1,26 +1,79 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Hobby from './Hobby';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+class App extends React.Component{
+
+  constructor( props ){
+    super( props );
+    this.state = {
+      firstName : "Alex",
+      lastName : "Miller",
+      hobbies : [{
+        name : "Play the piano"
+      },
+      {
+        name: "Programming"
+      },
+      {
+        name : "Swimming"
+      },
+      {
+        name : "Sing"
+      }],
+      favoriteHobby : "Not selected"
+    }
+
+    //this.changeName = this.changeName.bind( this );
+  }
+
+  changeName = () =>{
+    this.setState({
+      firstName : "Alfredo",
+      lastName : "Salazar"
+    });
+  }
+
+  changeFavoriteHobby = ( hobbyName ) => {
+    this.setState({
+      favoriteHobby : hobbyName
+    })
+  }
+
+
+  render(){
+    // This is a normal comment
+    return(
+      <section>
+        <h1>
+          Hello there {this.state.firstName} { this.state.lastName}
+        </h1>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Favorite hobby : {this.state.favoriteHobby}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        {/* <ul>
+          {this.state.hobbies.map( ( hobby, index ) => {
+            return(
+              <li>
+                {hobby.name}
+              </li>
+            )
+          })}
+        </ul> */}
+        <ul>
+          {this.state.hobbies.map( ( hobby, index ) => {
+            return( <Hobby hobbyName={hobby.name} 
+                           idx={index}  
+                           key={index + "-" + hobby.name}
+                           changeFavoriteHobby={this.changeFavoriteHobby}/> );
+          })}
+        </ul>
+        <button onClick={this.changeName}>
+          Click me
+        </button>
+      </section>
+    );
+  }
 }
 
 export default App;
